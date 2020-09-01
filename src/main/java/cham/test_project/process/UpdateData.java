@@ -99,7 +99,7 @@ public class UpdateData implements Processor {
 
         // Обработка ошибок
         }catch (IOException e){
-            LogFactory.getLog(Adapter.class).error(e.getMessage());
+            LogFactory.getLog(Adapter.class).error("Invalid configuration " + e.getMessage());
         }
 
         return result;

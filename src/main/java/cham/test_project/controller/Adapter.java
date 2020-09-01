@@ -41,9 +41,11 @@ public class Adapter extends RouteBuilder {
         // Отправка обработанных данных и возврат кода 202
         from("direct:output")
                 .choice()
+                // Проверка на наличие данных о погоде, если нету, то возвращаем код 424 внутренняя ошибка сервиса
                 .when().simple("${body} == ''")
                     .transform().constant("Incorrect operation of the weather service")
                     .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(424))
+                // Если проверка пройдена - отправляем JSON на ServerB
                 .otherwise()
                     .setHeader(Exchange.HTTP_METHOD, constant("POST"))
                     .to("http://localhost:8085/service_b/?bridgeEndpoint=true")
