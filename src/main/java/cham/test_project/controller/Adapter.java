@@ -1,6 +1,7 @@
 package cham.test_project.controller;
 
 import cham.test_project.data.ServiceA;
+import cham.test_project.data.ServiceB;
 import cham.test_project.process.UpdateData;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
@@ -39,9 +40,14 @@ public class Adapter extends RouteBuilder {
 
         // Отправка обработанных данных и возврат кода 202
         from("direct:output")
-                .setHeader(Exchange.HTTP_METHOD, constant("POST"))
-                .to("http://localhost:8085/service_b/?bridgeEndpoint=true")
-                .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(202));
+                .choice()
+                .when().simple("${body} == ''")
+                    .transform().constant("Incorrect operation of the weather service")
+                    .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(424))
+                .otherwise()
+                    .setHeader(Exchange.HTTP_METHOD, constant("POST"))
+                    .to("http://localhost:8085/service_b/?bridgeEndpoint=true")
+                    .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(202));
 
     }
 

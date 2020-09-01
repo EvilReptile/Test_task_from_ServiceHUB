@@ -1,0 +1,9 @@
+{
+    "weather_api" : {
+        "token_name" : "X-Yandex-API-Key",
+        "token" : "aba068b3-37bc-4f3a-ab76-50601c4aa1bf",
+        "url" : "https://api.weather.yandex.ru/v2/forecast/?lat=#latitute#&lon=#longitude#&limit=1",
+        "data_path" : "fact temp"
+    }
+
+}

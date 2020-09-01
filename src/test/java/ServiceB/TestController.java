@@ -1,9 +1,13 @@
 package ServiceB;
 
 import cham.test_project.data.ServiceB;
+import io.swagger.annotations.ResponseHeader;
+import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.springframework.stereotype.Component;
+
+import java.net.http.HttpResponse;
 
 @Component
 public class TestController extends RouteBuilder {
